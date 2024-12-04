@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from tensorflow import keras
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import SmoothBivariateSpline
-from HestonAnalytical import heston_price, implied_volatility
+from NNStochVol.HestonAnalytical import heston_price, implied_volatility
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -16,9 +16,6 @@ import keras_tuner as kt
 import random
 import tensorflow as tf
 
-
-r = 0.0427
-q = 0.008
 
 dataset_df = pd.read_csv('heston_dataset.csv')
 

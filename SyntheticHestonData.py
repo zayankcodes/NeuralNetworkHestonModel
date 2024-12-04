@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from joblib import Parallel, delayed
-from HestonAnalytical import heston_price, implied_volatility
+from NNStochVol.HestonAnalytical import heston_price, implied_volatility
 
 options_data = pd.read_csv('yfinance_dataset.csv')
+
 r = 0.0427
-q = 0.008
 S0 = 1
 
 num_samples = 30000
@@ -40,8 +40,8 @@ def compute_option_and_iv(idx):
     data_points = []
     for T in maturity_range:
         for K in strike_range:
-            price = heston_price(S0, K, r, q, T, kappa, theta, sigma, rho, v0)
-            iv = implied_volatility(price, S0, K, r, q, T)
+            price = heston_price(S0, K, r, T, kappa, theta, sigma, rho, v0)
+            iv = implied_volatility(price, S0, K, r, T)
             if iv > 0 and iv < 3.0:
                 data_points.append({
                     'kappa': kappa,

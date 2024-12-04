@@ -83,7 +83,7 @@ def integral_price(m, tau, theta, sigma, rho, kappa, v0):
     return integ
 
 
-def heston_price(S0, K, r, q, T, kappa, theta, sigma, rho, v0):
+def heston_price(S0, K, r, T, kappa, theta, sigma, rho, v0):
 
     m = np.log(S0/K) + r*T
     integ = integral_price(m, T, theta, sigma, rho, kappa, v0)  
@@ -91,21 +91,21 @@ def heston_price(S0, K, r, q, T, kappa, theta, sigma, rho, v0):
          
     return price
 
-def black_scholes_call_price(S0, K, r, q, T, sigma):
+def black_scholes_call_price(S0, K, r, T, sigma):
 
     if sigma <= 0:
-        return max(S0 * np.exp(-q * T) - K * np.exp(-r * T), 0.0)
+        return max(S0 - K * np.exp(-r * T), 0.0)
     
-    d1 = (log(S0 / K) + (r - q + 0.5 * sigma**2) * T) / (sigma * sqrt(T))
+    d1 = (log(S0 / K) + (r + 0.5 * sigma**2) * T) / (sigma * sqrt(T))
     d2 = d1 - sigma * sqrt(T)
-    call = S0 * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+    call = S0 * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
 
     return call
 
 
-def implied_volatility(target_price, S0, K, r, q, T, tol=1e-8, max_iterations=100):
+def implied_volatility(target_price, S0, K, r, T, tol=1e-8, max_iterations=100):
 
-    objective = lambda sigma: black_scholes_call_price(S0, K, r, q, T, sigma) - target_price
+    objective = lambda sigma: black_scholes_call_price(S0, K, r, T, sigma) - target_price
 
     vol_lower = 1e-6
     vol_upper = 5.0  
@@ -129,88 +129,4 @@ def implied_volatility(target_price, S0, K, r, q, T, tol=1e-8, max_iterations=10
 
 
 
-#Calibrated Parameters: [ 2.19553583  0.11861383  0.72169349 -0.89999987  0.07151662]
-if __name__ == "__main__":
-   
-    S0 = 1    
-    options_data = pd.read_csv('yfinance_dataset.csv')
-    middle_index = len(options_data) // 2
-    rows_to_print = 30
-    start_index = max(0, middle_index - rows_to_print // 2)
-    end_index = min(len(options_data), middle_index + rows_to_print // 2 + 1)
-    print(options_data.iloc[start_index:end_index])  
-     
-    r = 0.0441  
-    q = 0.008     
-    kappa = 2.19553583  
-    theta = 0.11861383 
-    sigma = 0.72169349 
-    rho = -0.89999987  
-    v0 = 0.07151662
 
-    T = 0.573119
-
-
-    K = 370.0  / 417
-
- 
-    price = heston_price(S0, K, r, q, T, kappa, theta, sigma, rho, v0)
-    
-
-
-    iv = implied_volatility(price, S0, K, r, q, T) #0.317054 
-
-    print(iv)
-
-'''
-S0 = 412.869995       
-   
-     
-r = 0.0441  
-q = 0.008     
-kappa = 1.0
-theta = 0.2  
-sigma = 0.3  
-rho = -0.8  
-v0 = 0.2
-
-
-strikes = np.linspace(S0 * 0.8, S0 * 1.2, 10)
-maturities = np.linspace(30 / 365, 2, 10)
-
-
-iv_surface = []
-grid_points = []
-
-
-
-for i, T in enumerate(maturities):
-    for j, K in enumerate(strikes):
-        price = heston_price(S0, K, r, q, T, kappa, theta, sigma, rho, v0)
-        iv = implied_volatility(price, S0, K, r, q, T)
-        iv_surface.append(iv)
-        grid_points.append((K, T))
-
-# Interpolate with SmoothBivariateSpline
-strikes, maturities = np.meshgrid(strikes, maturities)
-iv_surface = np.array(iv_surface).reshape((len(maturities), len(strikes)))
-spline = SmoothBivariateSpline(
-    np.ravel(strikes), np.ravel(maturities), np.ravel(iv_surface), s=0.2
-)
-
-# Generate smoother data
-fine_strikes = np.linspace(S0 * 0.8, S0 * 1.2, 50)
-fine_maturities = np.linspace(30/365, 2.0, 50)
-fine_strikes, fine_maturities = np.meshgrid(fine_strikes, fine_maturities)
-smoothed_iv = spline.ev(fine_strikes, fine_maturities)
-
-# Plot the implied volatility surface
-fig = plt.figure(figsize=(12, 8))
-ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(fine_strikes, fine_maturities, smoothed_iv, cmap='viridis')
-ax.set_xlabel('Strike Price (K)')
-ax.set_ylabel('Maturity (T)')
-ax.set_zlabel('Implied Volatility')
-ax.set_title('Smoothed Implied Volatility Surface')
-plt.show()
-'''
