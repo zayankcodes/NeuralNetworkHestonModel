@@ -1,47 +1,17 @@
-import numpy as np
 
-from scipy.stats import norm
-import scipy.optimize as optimize
-from scipy.interpolate import SmoothBivariateSpline
-import logging
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.stats import norm
-from scipy import optimize
-import logging
-from scipy.integrate import trapezoid
-from numba import jit
-import cmath
-
-import numpy as np
-from scipy.stats import norm
-from scipy.integrate import quad
-from scipy.optimize import brentq
-logging.basicConfig(level=logging.INFO)
-import numpy as np
-from scipy.integrate import quad
-from scipy.optimize import brentq
-import numpy as np
-from scipy import integrate, optimize
 from math import log, sqrt, exp, pi
-from scipy.stats import norm
-
-import os
-import sys
 import numpy as np
 import pandas as pd
-from pandas import DataFrame
 import matplotlib.pyplot as plt
-import time
-import datetime
+from scipy import optimize, integrate
+from scipy.stats import norm, qmc
+from scipy.integrate import quad, trapezoid, quad_vec
+from scipy.optimize import brentq
+from scipy.interpolate import SmoothBivariateSpline
+from numba import jit
 
-np.random.seed(42) # set a seed for the random generator
 
-
-# scipy
-from scipy.integrate import quad_vec  # quad_vec allows to compute integrals accurately
-from scipy.stats import norm
-from scipy.stats import qmc # to perform Latin Hypercube Sampling (LHS) 
+np.random.seed(42)
 
 @jit
 def beta_function(u, tau, sigma, rho, kappa):
@@ -146,6 +116,18 @@ def implied_volatility(target_price, S0, K, r, q, T, tol=1e-8, max_iterations=10
         implied_vol = np.nan
 
     return implied_vol
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Calibrated Parameters: [ 2.19553583  0.11861383  0.72169349 -0.89999987  0.07151662]
 if __name__ == "__main__":

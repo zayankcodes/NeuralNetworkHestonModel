@@ -4,13 +4,9 @@ from tqdm import tqdm
 from joblib import Parallel, delayed
 from HestonAnalytical import heston_price, implied_volatility
 
-
-
-r = 0.0443
-q = 0.008
-
 options_data = pd.read_csv('yfinance_dataset.csv')
-
+r = 0.0427
+q = 0.008
 S0 = 1
 
 num_samples = 30000
