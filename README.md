@@ -4,7 +4,7 @@ A neural network based calibration method for the Heston model that performs the
 
 # __Introduction__
 
-# The Black-Scholes Model
+## The Black-Scholes Model
 
 In the Black-Scholes model, the underlying asset follows a Geometric Brownian motion. That is, given a probability space (Ω, 𝓕, ℙ) supporting a one-dimensional Brownian motion (Wᵗ)ₜ≥₀, the asset price process (Sₜ)ₜ≥₀ is the unique strong solution to the following SDE:
 
@@ -15,7 +15,7 @@ where r > 0 is a constant risk-free interest rate and σ > 0 is a constant insta
 
 ---
 
-# Implied Volatility
+## Implied Volatility
 
 Option prices are often discussed with regard to their implied volatility. The implied volatility, or Black-Scholes implied volatility, is the unique value of the volatility parameter such that the Black-Scholes pricing formula equals the given price of a specific option.
 
