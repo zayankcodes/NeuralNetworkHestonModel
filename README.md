@@ -22,13 +22,13 @@ Option prices are often discussed with regard to their implied volatility. The i
 The Black-Scholes formula for a European Call option is defined as:
 
 
-Cᴮˢ(σ) := Cᴮˢ(Sₜ, t, K, T, σ) := SₜN(d₊) - Ke⁻ʳ⁽ᵀ⁻ᵗ⁾N(d₋),
+### Cᴮˢ(σ) := Cᴮˢ(Sₜ, t, K, T, σ) := SₜN(d₊) - Ke⁻ʳ⁽ᵀ⁻ᵗ⁾N(d₋),
 
 where
 
-d₊ = 1 / (σ√(T - t)) [ln(Sₜ / K) + (r + σ² / 2)(T - t)], 
+### d₊ = 1 / (σ√(T - t)) [ln(Sₜ / K) + (r + σ² / 2)(T - t)], 
 
-d₋ = d₊ - σ√(T - t).
+### d₋ = d₊ - σ√(T - t).
 
 
 Here, Sₜ is the price of the asset at time t, K is the options strike, T is the maturity of the option, t is the current time of pricing, and σ is the volatility parameter.
@@ -36,7 +36,7 @@ Here, Sₜ is the price of the asset at time t, K is the options strike, T is th
 Given an observed call option price C(K, T), the implied volatility σᴮˢ(K, T) is defined as:
 
 
-C(K, T) = Cᴮˢ(K, T, σᴮˢ(K, T)).
+### C(K, T) = Cᴮˢ(K, T, σᴮˢ(K, T)).
 
 This solution is unique because Cᴮˢ is strictly increasing in σ.
 
