@@ -2,7 +2,7 @@
 A neural network based calibration method for the Heston model that performs the calibration task at high speeds for the full implied volatility surface. Graphs and charts displaying key results are in the RESULTS folder.
 
 
-## File Breakdown
+## Key File Breakdown
 
 The HestonAnalytical file contains the analytical implementation for pricing and deducing the implied volatility of European call options under the Heston model. 
 
