@@ -14,4 +14,4 @@ The SyntheticHestonData file creates training and testing data for the model via
 
 The HestonNeuralNetwork file contains the implentation and training of the neural network that approximates the Heston analytical function
 
-The HestonNNCalibration file then finds the Heston parameters through calibration of this neural network with the MFST option data. Differential evolution is chosen as the method of calibration.
+The HestonNNCalibration file then finds the Heston parameters through calibration of this neural network with the MFST option data, utilizing Differential Evolution.
