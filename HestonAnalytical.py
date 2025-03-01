@@ -82,30 +82,28 @@ def integral_price(m, tau, theta, sigma, rho, kappa, v0):
 
     return integ
 
+def heston_price(S0, K, r, T, q, kappa, theta, sigma, rho, v0):
 
-def heston_price(S0, K, r, T, kappa, theta, sigma, rho, v0):
-
-    m = np.log(S0/K) + r*T
+    m = np.log(S0/K) + (r - q) * T
     integ = integral_price(m, T, theta, sigma, rho, kappa, v0)  
-    price = S0 - K * np.exp(-r*T) * integ  / np.pi
+    price = S0 * np.exp(-q * T) - K * np.exp(-r * T) * integ  / np.pi
          
     return price
 
-def black_scholes_call_price(S0, K, r, T, sigma):
+def black_scholes_call_price(S0, K, r, T, q, sigma):
 
     if sigma <= 0:
-        return max(S0 - K * np.exp(-r * T), 0.0)
+        return max(S0 * np.exp(-q * T) - K * np.exp(-r * T), 0.0)
     
-    d1 = (log(S0 / K) + (r + 0.5 * sigma**2) * T) / (sigma * sqrt(T))
+    d1 = (log(S0 / K) + ((r-q) + 0.5 * sigma**2) * T) / (sigma * sqrt(T))
     d2 = d1 - sigma * sqrt(T)
-    call = S0 * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+    call = S0 * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
 
     return call
 
+def implied_volatility(target_price, S0, K, r, T, q, tol=1e-8, max_iterations=100):
 
-def implied_volatility(target_price, S0, K, r, T, tol=1e-8, max_iterations=100):
-
-    objective = lambda sigma: black_scholes_call_price(S0, K, r, T, sigma) - target_price
+    objective = lambda sigma: black_scholes_call_price(S0, K, r, T, q, sigma) - target_price
 
     vol_lower = 1e-6
     vol_upper = 5.0  

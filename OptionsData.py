@@ -25,9 +25,11 @@ expiration_dates_dt = [datetime.strptime(date, '%Y-%m-%d') for date in expiratio
 desired_maturities_months = list(range(1, 25))
 current_date = datetime.now()
 
+
 def find_closest_expiration(target_date, expiration_dates):
     closest_date = min(expiration_dates, key=lambda x: abs(x - target_date))
     return closest_date
+
 
 selected_expiration_dates = []
 selected_expiration_dates_str = []
@@ -99,7 +101,8 @@ options_data.reset_index(drop=True, inplace=True)
 
 dataset_df = pd.DataFrame(options_data)
 
-dataset_df.to_csv('yfinance_dataset.csv', index=False)
+dataset_df.to_csv('yfinance_dataset_MSFT_2_26_2025.csv', index=False)
+
 
 
 
