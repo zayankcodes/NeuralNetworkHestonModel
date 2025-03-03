@@ -16,7 +16,7 @@ from scipy.interpolate import SmoothBivariateSpline
 from scipy.optimize import least_squares
 
 
-ticker = "MSFT"
+ticker = "AAPL"
 stock = yf.Ticker(ticker)
 underlying_price = stock.history(period="1d")["Close"].iloc[-1]
 
@@ -101,7 +101,7 @@ options_data.reset_index(drop=True, inplace=True)
 
 dataset_df = pd.DataFrame(options_data)
 
-dataset_df.to_csv('yfinance_dataset_MSFT_2_26_2025.csv', index=False)
+dataset_df.to_csv('yfinance_dataset_AAPL_3_3_2025.csv', index=False)
 
 
 

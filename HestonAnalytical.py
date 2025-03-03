@@ -117,8 +117,7 @@ def implied_volatility(target_price, S0, K, r, T, q, tol=1e-8, max_iterations=10
 
 
 
-
-
+print(implied_volatility(20, 200, 190, 0.04, 1, 0))
 
 
 
